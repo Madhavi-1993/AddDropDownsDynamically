@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add Remove Select Box Fields Dynamically using jQuery Ajax in PHP</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	</head>
+	<body>
+	<script>
+	var dropdown_data = [
+{
+ lname:"Channel",
+ lvalue:"channel",
+ list:[{
+	name:"Channel1", value:"channel1"}, 
+	{name:"Channel2", value:"channel2"}, 
+	{name:"Channel3", value:"channel3"}, 
+	{name:"Channel4", value:"channel4"}, 
+	{name:"Channel5", value:"channel5"}, 
+	{name:"Channel6", value:"channel6"}
+ ]
+ },
+ {
+ lname:"User Type",
+ lvalue:"user_type",
+ list:[{
+	name:"User Type1", value:"user_type1"}, 
+	{name:"User Type2", value:"user_type2"}, 
+	{name:"User Type3", value:"user_type3"}, 
+	{name:"User Type4", value:"user_type4"}, 
+	{name:"User Type5", value:"user_type5"}, 
+	{name:"User Type6", value:"user_type6"}
+ ]
+ },
+ {
+ lname:"Event For",
+ lvalue:"event_for",
+ list:[{
+	name:"Event For1", value:"event_for1"}, 
+	{name:"Event For2", value:"event_for2"}, 
+	{name:"Event For3", value:"event_for3"}, 
+	{name:"Event For4", value:"event_for4"}, 
+	{name:"Event For5", value:"event_for5"}, 
+	{name:"Event For6", value:"event_for6"}
+ ]
+ },
+ {
+ lname:"Avail Limit",
+ lvalue:"avail_limit",
+ list:[{
+	name:"Avail For1", value:"avail_limit1"}, 
+	{name:"Avail Limit2", value:"avail_limit2"}, 
+	{name:"Avail Limit3", value:"avail_limit3"}, 
+	{name:"Avail Limit4", value:"avail_limit4"}, 
+	{name:"Avail Limit5", value:"avail_limit5"}, 
+	{name:"Avail Limit6", value:"avail_limit6"}
+ ]
+ },
+];
+	//console.log(dropdown_data[0].list);
+		var count =1;
+			$(document).on('click', '#add_dropdown', function(){
+			count = count+1;
+				var html = '';
+				html += '<tr><td><label>Criterion:</label></td><td>';
+				html += '<select name="criterion[]" id="criterion'+count+'" class="form-control criterion"><option value="">Select</option><option value="channel">Channel</option><option value="user_type">User Type</option><option value="event_for">Event Type</option><option value="avail_limit">Maximum Avail Count</option></select></td>';
+				html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+				//alert(html);
+				$('#criterion_dropdown').append(html);
+			});
+			
+		$(document).on('change', '.criterion', function(){
+			var val = $('#criterion'+count).val();
+			//alert(val);
+			var html = '';
+			for(var dd = 0; dd < dropdown_data.length; dd++){
+				if(val == dropdown_data[dd].lvalue){
+					html += '<tr><td><label>'+dropdown_data[dd].lname+':</label></td>';
+					  html += '<td><select name="item_unit[]" class="form-control item_unit"><option value="">Select Unit</option>';
+					  var optionRes = '';
+					  for (var i = 0; i < dropdown_data[dd].list.length; i++) {
+					  //console.log(dropdown_data[0].list[i]);
+						 optionRes = optionRes+'<option value="'+dropdown_data[dd].list[i].value+'">'+dropdown_data[dd].list[i].name+'</option>';
+					  }
+					  console.log(optionRes);
+					  html += optionRes+'</select></td>';
+					  html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+					  $('#criterion_dropdown').append(html);
+					}
+			}
+		  
+		 });
+		 
+		 $(document).on('click', '.remove', function(){
+		  $(this).closest('tr').remove();
+		 });
+		
+        $(document).on('click', '#get_dropdown', function(){   
+				
+           var val = $(this).text();
+		alert(val);	
+		
+			$.each($(".criterion option:selected"), function(){            
+           var $val = $(this).text();
+		   alert($val);
+        });	
+    </script> 
+	<div class="container">
+	   <h3 align="center">Add Remove Select Box Fields Dynamically using jQuery</h3>
+	   <br />
+	   <h4 align="center">Enter Item Details</h4>
+	   <br />
+		<form id="insert_form">
+		<div id="defaultDD">
+			<label>Criterion:</label></br>
+			<select id="criterion1" name="criterion1" onChange="changecat(this.value);">
+				<option value="channel">Channel</option>
+				<option value="user_type">User Type</option>
+				<option value="event_for">Event Type</option>
+				<option value="avail_limit">Maximum Avail Count</option>
+			</select><br>
+			<label>Channel:</label><br>
+			<select name="channel" id="channel">
+				<option value="channel1" >channel1</option>
+				<option value="channel2" >channel2</option>
+				<option value="channel3" >channel3</option>
+				<option value="channel4" >channel4</option>
+			</select></br>
+		</div>
+		<br />	
+			
+			<div id="criterion_dropdown">
+			</div>
+			
+			</div>
+			<br></br>
+			<button type="button" id="add_dropdown" >add DropDown</button>
+			<br></br>
+			<button type="button" id="get_dropdown" >get values</button>
+	</div>
+			
+			
+		</form>
+	</body>
+</html>
